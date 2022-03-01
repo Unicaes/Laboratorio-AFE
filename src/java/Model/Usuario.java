@@ -99,4 +99,10 @@ public class Usuario {
         Usuario.LoggedUser = item;
         return true;
     }
+    public static float GetSalario(int id)throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+        ocon = new Conexion();
+        String query = "select salario from usuario where id_usuario="+id+";";
+        ResultSet rs = ocon.DoQuery(query);
+        return rs.getInt("salario");
+    }
 }
