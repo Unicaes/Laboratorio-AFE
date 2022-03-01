@@ -20,7 +20,7 @@ public class Conexion {
     Connection conexion = null;
     static String url = "jdbc:postgresql://localhost:5432/";
     static String Usuario = "postgres";
-    static String contrasena = "Palma280300!";
+    static String contrasena = "";
 
     public Conexion() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         try {
