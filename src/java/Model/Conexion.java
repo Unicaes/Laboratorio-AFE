@@ -20,7 +20,7 @@ public class Conexion {
     Connection conexion = null;
     static String url = "jdbc:postgresql://localhost:5432/";
     static String Usuario = "postgres";
-    static String contrasena = "";
+    static String contrasena = "Palma280300!";
 
     public Conexion() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         try {
@@ -37,7 +37,8 @@ public class Conexion {
     }
 
     public ResultSet DoQuery(String query) throws SQLException {
-        Statement cons = this.conexion.createStatement();
+        Statement cons = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                        ResultSet.CONCUR_UPDATABLE);
         return cons.executeQuery(query);
     }
     public int DoQuery2(String query) throws SQLException{

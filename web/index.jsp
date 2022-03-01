@@ -3,12 +3,6 @@
 <%@page import="Model.Conexion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-<% 
-    ArrayList<Usuario> usuarios = Usuario.GetAll();
-    out.println(usuarios.size());
-%>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,7 +32,7 @@
                           <div class="card-body p-4 p-lg-5">
 
                             <!-- Formulario - Inicio de sesión -->
-                            <form method="POST">
+                            <form method="POST" action="${pageContext.request.contextPath}/LoginServlet">
                                 <div class="col-12 mb-4">
                                     <label class="mb-2">Correo electrónico:</label>
                                     <input type="email" name="txt_email" 
