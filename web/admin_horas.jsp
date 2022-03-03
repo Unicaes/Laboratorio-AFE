@@ -23,7 +23,6 @@
         <!-- Implementando template -->
         <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
         <t:template_admin page_title="Planilla de pagos - 2022"></t:template_admin>
-<<<<<<< HEAD
 
             <!-- 1.0 Planilla de horas/pagos mensual/semanal -->
             <div class="container border" 
@@ -64,6 +63,11 @@
                     </div>                    
                 </form>
 
+                <%   String mes_ver = "";
+                    if (request.getParameter("btn_consultar_planilla") != null) {
+                        mes_ver = request.getParameter("select_mes_ver").toLowerCase();
+                    }
+                %>
                 <!-- Semana 1 - Tabla - Planilla de horas/pagos mensual/semanal -->
                 <div style="padding: 20px">  
 
@@ -77,7 +81,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>⠀⠀⠀⠀</td>
+                                <td><%= mes_ver.toUpperCase() %></td>
                                 <td style="background-color:#bcacff;">1</td>
                             </tr> 
                         </tbody>
@@ -186,7 +190,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>⠀⠀⠀⠀</td>
+                                <td><%= mes_ver.toUpperCase() %></td>
                                 <td style="background-color:#bcacff;">2</td>
                             </tr> 
                         </tbody>
@@ -295,7 +299,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>⠀⠀⠀⠀</td>
+                                <td><%= mes_ver.toUpperCase() %></td>
                                 <td style="background-color:#bcacff;">3</td>
                             </tr> 
                         </tbody>
@@ -404,7 +408,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>⠀⠀⠀⠀</td>
+                                <td><%= mes_ver.toUpperCase() %></td>
                                 <td style="background-color:#bcacff;">4</td>
                             </tr> 
                         </tbody>
@@ -512,7 +516,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="padding-left: 20px;">⠀⠀⠀⠀</td>
+                                <td style="padding-left: 20px;"><%= mes_ver.toUpperCase() %></td>
                             </tr> 
                         </tbody>
                     </table>   
@@ -594,620 +598,6 @@
 
             </div><br>
 
-            <!-- 2.0 Ingreso de horas de trabajo mensual/semanal -->
-            <div class="container border" 
-                 style="padding-top: 10px; margin-bottom: 20px;">
-
-                <div class="container border bg-light" style="padding-top: 15px;">
-                    <p class="text-left" style="padding-left:10px;">
-                        <b>2 - Registro de horas de trabajo Mensual | Semanal</b>    
-                    </p>
-                </div>
-
-                <form class="border" method="POST" style="padding: 20px;">
-                    <div class="row">
-                        <div class="col-3">                    
-                            <select class="form-control text-center" name="select_mes_editar">
-                                <option selected>Seleccione un mes</option>
-                                <option>Enero</option>
-                                <option>Febrero</option>
-                                <option>Marzo</option>
-                                <option>Abril</option>
-                                <option>Mayo</option>
-                                <option>Junio</option>
-                                <option>Julio</option>
-                                <option>Agosto</option>
-                                <option>Septiembre</option>
-                                <option>Octubre</option>
-                                <option>Noviembre</option>
-                                <option>Diciembre</option>
-                            </select>
-                        </div>  
-
-                        <div class="col-8">   
-                            <button type="submit" name="btn_editar_planilla" 
-                                    class="btn btn-dark btn-md btn-block">
-                                Editar planilla de horas
-                            </button>
-                        </div>
-                    </div>                    
-                </form>
-=======
-        
-        <!-- 1.0 Planilla de horas/pagos mensual/semanal -->
-        <div class="container border" 
-        style="padding-top: 10px; margin-bottom: 20px;">
-        
-            <div class="container border bg-light" style="padding-top: 15px;">
-                <p class="text-left" style="padding-left:10px;">
-                    <b>1 - Planilla Mensual | Semanal</b>    
-                </p>
-            </div>
-            
-            <form class="border" method="POST" style="padding: 20px;">
-                <div class="row">
-                    <div class="col-3">                    
-                        <select class="form-control text-center" name="select_mes_ver">
-                            <option selected>Seleccione un mes</option>
-                            <option>Enero</option>
-                            <option>Febrero</option>
-                            <option>Marzo</option>
-                            <option>Abril</option>
-                            <option>Mayo</option>
-                            <option>Junio</option>
-                            <option>Julio</option>
-                            <option>Agosto</option>
-                            <option>Septiembre</option>
-                            <option>Octubre</option>
-                            <option>Noviembre</option>
-                            <option>Diciembre</option>
-                        </select>
-                    </div>  
-                    
-                    <div class="col-8">   
-                        <button type="submit" name="btn_consultar_planilla" 
-                        class="btn btn-dark btn-md btn-block">
-                            Consultar planilla de pagos
-                        </button>
-                    </div>
-                </div>                    
-            </form>
-
-            <%   String mes_consulta = "";
-                if (request.getParameter("btn_consultar_planilla") != null) {
-                    mes_consulta = request.getParameter("select_mes_ver").toLowerCase();}
-            %>
-            
-            <!-- Semana 1 - Tabla - Planilla de horas/pagos mensual/semanal -->
-            <div style="padding: 20px">  
-
-                <table class="table table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Mes</th>
-                            <th>Semana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><%= mes_consulta.toUpperCase() %></td>
-                            <td style="background-color:#bcacff;">1</td>
-                        </tr> 
-                    </tbody>
-                </table>   
-                
-                <!-- Planilla de pagos y horas de trabajo -->
-                <table class="table table-striped table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Trabajador</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sábado</th>
-                            <th>Horas totales</th>
-                            <th>Salario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- INICIO - Iterar Aquí -->
-                        
-                        <tr>
-                            <td>⠀⠀</td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                         
-                        <!-- FIN - Iterar Aquí -->
-                        
-                        <tr><td></td><td></td><td></td><td></td><td></td>
-                        <td></td><td></td><td></td><td></td></tr>   
-                        
-                        <tr>
-                            <td><b>Total horas por día</b></td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                              
-                            </td>
-                            <td><b>TOTAL HORAS</b></td>
-                            <td><b>TOTAL A PAGAR</b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Total a pagar por día</b></td>
-                            <td style="background-color:#7bb9d0;">
-                               
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#bcacff;">
-                             
-                            </td>
-                            <td style="background-color:#bcacff;">
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                     
-            </div>  
-            
-            <!-- Semana 2 - Tabla - Planilla de horas/pagos mensual/semanal -->
-            <div style="padding: 20px">  
-
-                <table class="table table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Mes</th>
-                            <th>Semana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><%= mes_consulta.toUpperCase() %></td>
-                            <td style="background-color:#bcacff;">2</td>
-                        </tr> 
-                    </tbody>
-                </table>   
-                
-                <!-- Planilla de pagos y horas de trabajo -->
-                <table class="table table-striped table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Trabajador</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sábado</th>
-                            <th>Horas totales</th>
-                            <th>Salario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- INICIO - Iterar Aquí -->
-                        
-                        <tr>
-                            <td>⠀⠀</td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                         
-                        <!-- FIN - Iterar Aquí -->
-                        
-                        <tr><td></td><td></td><td></td><td></td><td></td>
-                        <td></td><td></td><td></td><td></td></tr>   
-                        
-                        <tr>
-                            <td><b>Total horas por día</b></td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                              
-                            </td>
-                            <td><b>TOTAL HORAS</b></td>
-                            <td><b>TOTAL A PAGAR</b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Total a pagar por día</b></td>
-                            <td style="background-color:#7bb9d0;">
-                               
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#bcacff;">
-                             
-                            </td>
-                            <td style="background-color:#bcacff;">
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                     
-            </div>  
-            
-            <!-- Semana 3 - Tabla - Planilla de horas/pagos mensual/semanal -->
-            <div style="padding: 20px">  
-
-                <table class="table table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Mes</th>
-                            <th>Semana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><%= mes_consulta.toUpperCase() %></td>
-                            <td style="background-color:#bcacff;">3</td>
-                        </tr> 
-                    </tbody>
-                </table>   
-                
-                <!-- Planilla de pagos y horas de trabajo -->
-                <table class="table table-striped table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Trabajador</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sábado</th>
-                            <th>Horas totales</th>
-                            <th>Salario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- INICIO - Iterar Aquí -->
-                        
-                        <tr>
-                            <td>⠀⠀</td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                         
-                        <!-- FIN - Iterar Aquí -->
-                        
-                        <tr><td></td><td></td><td></td><td></td><td></td>
-                        <td></td><td></td><td></td><td></td></tr>   
-                        
-                        <tr>
-                            <td><b>Total horas por día</b></td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                              
-                            </td>
-                            <td><b>TOTAL HORAS</b></td>
-                            <td><b>TOTAL A PAGAR</b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Total a pagar por día</b></td>
-                            <td style="background-color:#7bb9d0;">
-                               
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#bcacff;">
-                             
-                            </td>
-                            <td style="background-color:#bcacff;">
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                     
-            </div>  
-            
-            <!-- Semana 4 - Tabla - Planilla de horas/pagos mensual/semanal -->
-            <div style="padding: 20px">  
-
-                <table class="table table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Mes</th>
-                            <th>Semana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><%= mes_consulta.toUpperCase() %></td>
-                            <td style="background-color:#bcacff;">4</td>
-                        </tr> 
-                    </tbody>
-                </table>   
-                
-                <!-- Planilla de pagos y horas de trabajo -->
-                <table class="table table-striped table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Trabajador</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sábado</th>
-                            <th>Horas totales</th>
-                            <th>Salario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- INICIO - Iterar Aquí -->
-                        
-                        <tr>
-                            <td>⠀⠀</td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                         
-                        <!-- FIN - Iterar Aquí -->
-                        
-                        <tr><td></td><td></td><td></td><td></td><td></td>
-                        <td></td><td></td><td></td><td></td></tr>   
-                        
-                        <tr>
-                            <td><b>Total horas por día</b></td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                              
-                            </td>
-                            <td><b>TOTAL HORAS</b></td>
-                            <td><b>TOTAL A PAGAR</b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Total a pagar por día</b></td>
-                            <td style="background-color:#7bb9d0;">
-                               
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#bcacff;">
-                             
-                            </td>
-                            <td style="background-color:#bcacff;">
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                     
-            </div>  
-            
-            <!-- TOTAL Mnesual - Tabla - Planilla de horas/pagos mensual/semanal -->
-            <div style="padding: 20px">  
-
-                <table class="table table-bordered" 
-                style="text-align: left;">
-                    <thead>
-                        <tr>
-                            <th style="padding-left: 20px;">Mes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding-left: 20px;"><%= mes_consulta.toUpperCase() %></td>
-                        </tr> 
-                    </tbody>
-                </table>   
-                
-                <!-- Planilla de pagos y horas de trabajo -->
-                <table class="table table-striped table-bordered" 
-                style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sábado</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr><td></td><td></td><td></td><td></td><td></td>
-                        <td></td><td></td><td></td><td></td></tr>   
-                        
-                        <tr>
-                            <td><b>Total horas por día</b></td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                               
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                                
-                            </td>
-                            <td style="background-color:#7bd0aa;">
-                              
-                            </td>
-                            <td><b>TOTAL HORAS</b></td>
-                            <td><b>TOTAL A PAGAR</b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Total a pagar por día</b></td>
-                            <td style="background-color:#7bb9d0;">
-                               
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#7bb9d0;">
-                              
-                            </td>
-                            <td style="background-color:#bcacff;">
-                             
-                            </td>
-                            <td style="background-color:#bcacff;">
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                     
-            </div>  
-            
-        </div><br>
-        
         <!-- 2.0 Ingreso de horas de trabajo mensual/semanal -->
         <div class="container border" 
         style="padding-top: 10px; margin-bottom: 20px;">
@@ -1246,8 +636,6 @@
                     </div>
                 </div>                    
             </form>
->>>>>>> 2a9743d80aeb69a11809854d88a5fe4b1721130f
-
             <%   String mes = "";
                 if (request.getParameter("btn_editar_planilla") != null) {
                     mes = request.getParameter("select_mes_editar").toLowerCase();
