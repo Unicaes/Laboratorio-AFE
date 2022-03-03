@@ -6,6 +6,8 @@
 <%
     Usuario usuario = new Usuario();
     horas_usuario horasusuario = new horas_usuario();
+    double fh_lu=0, fh_ma=0, fh_mi=0, fh_ju=0, fh_vi=0, fh_sa=0;
+    double final_horas_totales = 0;
 %>
 
 <!DOCTYPE html>
@@ -68,7 +70,14 @@
                         mes_ver = request.getParameter("select_mes_ver").toLowerCase();
                     }
                 %>
-                <!-- Semana 1 - Tabla - Planilla de horas/pagos mensual/semanal -->
+                <!-- Tabla - Planilla de horas/pagos mensual/semanal -->
+                <%    
+                    if (!(mes_ver.equals(""))) {
+                    fh_lu=0; fh_ma=0; fh_mi=0; fh_ju=0; fh_vi=0; fh_sa=0;
+                    final_horas_totales = 0;
+    
+                    for (int se = 1; se <= 4; se++) {
+                %>
                 <div style="padding: 20px">  
 
                     <table class="table table-bordered" 
@@ -82,7 +91,7 @@
                         <tbody>
                             <tr>
                                 <td><%= mes_ver.toUpperCase() %></td>
-                                <td style="background-color:#bcacff;">1</td>
+                                <td style="background-color:#bcacff;"><%= se %></td>
                             </tr> 
                         </tbody>
                     </table>   
@@ -106,18 +115,56 @@
                         <tbody>
                             <!-- INICIO - Iterar Aquí -->
 
-                            <tr>
-                                <td>⠀⠀</td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
+                            <%          
+                                ArrayList<Usuario> lUser = usuario.GetAll();
+                                               
+                                double horas_semanal = 0;
+                                double total_horas_semanales = 0;
+                                double th_lun=0, th_mar=0, th_mie=0, th_jue=0, th_vie=0, th_sab=0;
+                                
+                                for (int i = 0; i < lUser.size(); i++) {
 
+                                    ArrayList<horas_usuario> lHor = horasusuario.GetHorasByUsuario(lUser.get(i).id_usuario);
+                                    float h_lun = 0, h_mar = 0, h_mie = 0, h_jue = 0, h_vie = 0, h_sab = 0;
+
+                                    for (int j = 0; j < lHor.size(); j++) {
+                                        if (lHor.get(j).fecha.equals("s" + se + "-1-" + mes_ver)) {
+                                            h_lun = lHor.get(j).HorasTrabajadas;
+                                        } else if (lHor.get(j).fecha.equals("s" + se + "-2-" + mes_ver)) {
+                                            h_mar = lHor.get(j).HorasTrabajadas;
+                                        } else if (lHor.get(j).fecha.equals("s" + se + "-3-" + mes_ver)) {
+                                            h_mie = lHor.get(j).HorasTrabajadas;
+                                        } else if (lHor.get(j).fecha.equals("s" + se + "-4-" + mes_ver)) {
+                                            h_jue = lHor.get(j).HorasTrabajadas;
+                                        } else if (lHor.get(j).fecha.equals("s" + se + "-5-" + mes_ver)) {
+                                            h_vie = lHor.get(j).HorasTrabajadas;
+                                        } else if (lHor.get(j).fecha.equals("s" + se + "-6-" + mes_ver)) {
+                                            h_sab = lHor.get(j).HorasTrabajadas;
+                                        }
+                                    }
+
+                                // Totales semanales
+                                horas_semanal = h_lun+h_mar+h_mie+h_jue+h_vie+h_sab;
+                                total_horas_semanales += horas_semanal;
+
+                                // Total de horas por día
+                                th_lun += h_lun; th_mar += h_mar;
+                                th_mie += h_mie; th_jue += h_jue;
+                                th_vie += h_vie; th_sab += h_sab;   
+                            %>  
+                            <tr>
+                                <td><%= lUser.get(i).nombre + " " + lUser.get(i).apellido %></td>
+                                <td><%= h_lun + " hrs" %></td>
+                                <td><%= h_mar + " hrs" %></td>
+                                <td><%= h_mie + " hrs" %></td>
+                                <td><%= h_jue + " hrs" %></td>
+                                <td><%= h_vie + " hrs" %></td>
+                                <td><%= h_sab + " hrs" %></td>           
+                                <td><%= horas_semanal + " hrs" %></td>
+                                <td><%= "$ " + horas_semanal * 10%></td>
+                            </tr>
+                            <% }%> 
+                            
                             <!-- FIN - Iterar Aquí -->
 
                             <tr><td></td><td></td><td></td><td></td><td></td>
@@ -126,22 +173,22 @@
                             <tr>
                                 <td><b>Total horas por día</b></td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_lun + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_mar + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_mie + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_jue + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_vie + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= th_sab + " hrs" %>
                                 </td>
                                 <td><b>TOTAL HORAS</b></td>
                                 <td><b>TOTAL A PAGAR</b></td>
@@ -149,361 +196,40 @@
                             <tr>
                                 <td><b>Total a pagar por día</b></td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_lun * 10 %>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_mar * 10 %>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_mie * 10 %>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_jue * 10 %>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_vie * 10 %>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + th_sab * 10 %>
                                 </td>
                                 <td style="background-color:#bcacff;">
-
+                                    <%= total_horas_semanales + " hrs" %>
                                 </td>
                                 <td style="background-color:#bcacff;">
-
+                                    <%= "$ " + total_horas_semanales * 10 %>
                                 </td>
                             </tr>
                         </tbody>
                     </table>                     
                 </div>  
-
-                <!-- Semana 2 - Tabla - Planilla de horas/pagos mensual/semanal -->
-                <div style="padding: 20px">  
-
-                    <table class="table table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Mes</th>
-                                <th>Semana</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><%= mes_ver.toUpperCase() %></td>
-                                <td style="background-color:#bcacff;">2</td>
-                            </tr> 
-                        </tbody>
-                    </table>   
-
-                    <!-- Planilla de pagos y horas de trabajo -->
-                    <table class="table table-striped table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Trabajador</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Horas totales</th>
-                                <th>Salario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- INICIO - Iterar Aquí -->
-
-                            <tr>
-                                <td>⠀⠀</td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
-
-                            <!-- FIN - Iterar Aquí -->
-
-                            <tr><td></td><td></td><td></td><td></td><td></td>
-                                <td></td><td></td><td></td><td></td></tr>   
-
-                            <tr>
-                                <td><b>Total horas por día</b></td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td><b>TOTAL HORAS</b></td>
-                                <td><b>TOTAL A PAGAR</b></td>
-                            </tr>
-                            <tr>
-                                <td><b>Total a pagar por día</b></td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>                     
-                </div>  
-
-                <!-- Semana 3 - Tabla - Planilla de horas/pagos mensual/semanal -->
-                <div style="padding: 20px">  
-
-                    <table class="table table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Mes</th>
-                                <th>Semana</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><%= mes_ver.toUpperCase() %></td>
-                                <td style="background-color:#bcacff;">3</td>
-                            </tr> 
-                        </tbody>
-                    </table>   
-
-                    <!-- Planilla de pagos y horas de trabajo -->
-                    <table class="table table-striped table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Trabajador</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Horas totales</th>
-                                <th>Salario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- INICIO - Iterar Aquí -->
-
-                            <tr>
-                                <td>⠀⠀</td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
-
-                            <!-- FIN - Iterar Aquí -->
-
-                            <tr><td></td><td></td><td></td><td></td><td></td>
-                                <td></td><td></td><td></td><td></td></tr>   
-
-                            <tr>
-                                <td><b>Total horas por día</b></td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td><b>TOTAL HORAS</b></td>
-                                <td><b>TOTAL A PAGAR</b></td>
-                            </tr>
-                            <tr>
-                                <td><b>Total a pagar por día</b></td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>                     
-                </div>  
-
-                <!-- Semana 4 - Tabla - Planilla de horas/pagos mensual/semanal -->
-                <div style="padding: 20px">  
-
-                    <table class="table table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Mes</th>
-                                <th>Semana</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><%= mes_ver.toUpperCase() %></td>
-                                <td style="background-color:#bcacff;">4</td>
-                            </tr> 
-                        </tbody>
-                    </table>   
-
-                    <!-- Planilla de pagos y horas de trabajo -->
-                    <table class="table table-striped table-bordered" 
-                           style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Trabajador</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Horas totales</th>
-                                <th>Salario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- INICIO - Iterar Aquí -->
-
-                            <tr>
-                                <td>⠀⠀</td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
-
-                            <!-- FIN - Iterar Aquí -->
-
-                            <tr><td></td><td></td><td></td><td></td><td></td>
-                                <td></td><td></td><td></td><td></td></tr>   
-
-                            <tr>
-                                <td><b>Total horas por día</b></td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td><b>TOTAL HORAS</b></td>
-                                <td><b>TOTAL A PAGAR</b></td>
-                            </tr>
-                            <tr>
-                                <td><b>Total a pagar por día</b></td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#7bb9d0;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                                <td style="background-color:#bcacff;">
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>                     
-                </div>  
-
+                <%  // Total final
+                    fh_lu += th_lun; fh_ma += th_mar;
+                    fh_mi += th_mie; fh_ju += th_jue;
+                    fh_vi += th_vie; fh_sa += th_sab;
+
+                    final_horas_totales += total_horas_semanales;}%>
+               
                 <!-- TOTAL Mnesual - Tabla - Planilla de horas/pagos mensual/semanal -->
                 <div style="padding: 20px">  
 
@@ -545,22 +271,22 @@
                             <tr>
                                 <td><b>Total horas por día</b></td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= fh_lu + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= fh_ma + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= fh_mi + " hrs" %>
+                                </td>   
+                                <td style="background-color:#7bd0aa;">
+                                    <%= fh_ju+ " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
+                                    <%= fh_vi + " hrs" %>
                                 </td>
                                 <td style="background-color:#7bd0aa;">
-
-                                </td>
-                                <td style="background-color:#7bd0aa;">
-
+                                    <%= fh_sa + " hrs" %>
                                 </td>
                                 <td><b>TOTAL HORAS</b></td>
                                 <td><b>TOTAL A PAGAR</b></td>
@@ -568,35 +294,35 @@
                             <tr>
                                 <td><b>Total a pagar por día</b></td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_lu * 10%>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_ma * 10%>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_mi * 10%>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_ju * 10%>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_vi * 10%>
                                 </td>
                                 <td style="background-color:#7bb9d0;">
-
+                                    <%= "$ " + fh_sa * 10%>
                                 </td>
                                 <td style="background-color:#bcacff;">
-
+                                    <%= final_horas_totales + " hrs" %>
                                 </td>
                                 <td style="background-color:#bcacff;">
-
+                                    <%= "$ " + final_horas_totales * 10 %>
                                 </td>
                             </tr>
                         </tbody>
                     </table>                     
                 </div>  
 
-            </div><br>
+            </div><%}%><br>
 
         <!-- 2.0 Ingreso de horas de trabajo mensual/semanal -->
         <div class="container border" 
