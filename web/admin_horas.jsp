@@ -687,17 +687,17 @@
                                             float h_lun = 0, h_mar = 0, h_mie = 0, h_jue = 0, h_vie = 0, h_sab = 0;
 
                                             for (int j = 0; j < lHoras.size(); j++) {
-                                                if (lHoras.get(j).fecha.equals("s" + s + "-lun-" + mes)) {
+                                                if (lHoras.get(j).fecha.equals("s" + s + "-1-" + mes)) {
                                                     h_lun = lHoras.get(j).HorasTrabajadas;
-                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-mar-" + mes)) {
+                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-2-" + mes)) {
                                                     h_mar = lHoras.get(j).HorasTrabajadas;
-                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-mie-" + mes)) {
+                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-3-" + mes)) {
                                                     h_mie = lHoras.get(j).HorasTrabajadas;
-                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-jue-" + mes)) {
+                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-4-" + mes)) {
                                                     h_jue = lHoras.get(j).HorasTrabajadas;
-                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-vie-" + mes)) {
+                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-5-" + mes)) {
                                                     h_vie = lHoras.get(j).HorasTrabajadas;
-                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-sab-" + mes)) {
+                                                } else if (lHoras.get(j).fecha.equals("s" + s + "-6-" + mes)) {
                                                     h_sab = lHoras.get(j).HorasTrabajadas;
                                                 }
                                             }
