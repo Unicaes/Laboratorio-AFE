@@ -35,7 +35,7 @@
                             <form method="POST" action="${pageContext.request.contextPath}/LoginServlet">
                                 <div class="col-12 mb-4">
                                     <label class="mb-2">Correo electrónico:</label>
-                                    <input type="email" name="txt_email" 
+                                    <input type="text" name="txt_email" 
                                            class="form-control"
                                     placeholder="Ingreso de e-mail...">
                                 </div>

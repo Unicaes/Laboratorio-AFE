@@ -5,9 +5,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    Usuario usuario = new Usuario();
     horas_usuario horasusuario = new horas_usuario();
-    int id_usuario = 6;
+    Usuario usuario = new Usuario();
+    int id_usuario = usuario.LoggedUser.id_usuario;
+    String username = usuario.LoggedUser.nombre + " " + usuario.LoggedUser.apellido;
 %>
 
 <!DOCTYPE html>
@@ -86,8 +87,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><%= mes %></td>
-                            <td>      </td>
+                            <td><%= mes.toUpperCase() %></td>
+                            <td><%= username %></td>
                         </tr> 
                     </tbody>
                 </table>   
@@ -125,22 +126,22 @@
                             float h_lun=0, h_mar=0, h_mie=0, h_jue=0, h_vie=0, h_sab=0;
                             
                             for (int j = 0; j < lHoras.size(); j++) {  
-                                if (lHoras.get(j).fecha.equals("s"+s+"-lun-" + mes)) {
+                                if (lHoras.get(j).fecha.equals("s"+s+"-1-" + mes)) {
                                    h_lun = lHoras.get(j).HorasTrabajadas;
                                 }
-                                else if (lHoras.get(j).fecha.equals("s"+s+"-mar-" + mes)) {
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-2-" + mes)) {
                                    h_mar = lHoras.get(j).HorasTrabajadas;
                                 }
-                                else if (lHoras.get(j).fecha.equals("s"+s+"-mie-" + mes)) {
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-3-" + mes)) {
                                    h_mie = lHoras.get(j).HorasTrabajadas;
                                 }
-                                else if (lHoras.get(j).fecha.equals("s"+s+"-jue-" + mes)) {
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-4-" + mes)) {
                                    h_jue = lHoras.get(j).HorasTrabajadas;
                                 }
-                                else if (lHoras.get(j).fecha.equals("s"+s+"-vie-" + mes)) {
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-5-" + mes)) {
                                    h_vie = lHoras.get(j).HorasTrabajadas;
                                 }
-                                else if (lHoras.get(j).fecha.equals("s"+s+"-sab-" + mes)) {
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-6-" + mes)) {
                                    h_sab = lHoras.get(j).HorasTrabajadas;
                                 }
                             }
@@ -258,7 +259,7 @@
                     <tbody>
                         <tr>
                             <td>2022</td>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= username %></td>
                         </tr> 
                     </tbody>
                 </table>   
@@ -291,7 +292,7 @@
                                 double horas_mes = 0;
                                          
                                 for (int j = 0; j < lHoras.size(); j++) {  
-                                    if (lHoras.get(j).fecha.substring(7).equals(mes_trabajado)) {
+                                    if (lHoras.get(j).fecha.substring(5).equals(mes_trabajado)) {
                                         horas_mes += lHoras.get(j).HorasTrabajadas;
                                     }
                             }
