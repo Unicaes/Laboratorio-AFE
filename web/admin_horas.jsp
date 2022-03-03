@@ -63,6 +63,11 @@
                 </div>                    
             </form>
 
+            <%   String mes_consulta = "";
+                if (request.getParameter("btn_consultar_planilla") != null) {
+                    mes_consulta = request.getParameter("select_mes_ver").toLowerCase();}
+            %>
+            
             <!-- Semana 1 - Tabla - Planilla de horas/pagos mensual/semanal -->
             <div style="padding: 20px">  
 
@@ -76,7 +81,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= mes_consulta.toUpperCase() %></td>
                             <td style="background-color:#bcacff;">1</td>
                         </tr> 
                     </tbody>
@@ -185,7 +190,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= mes_consulta.toUpperCase() %></td>
                             <td style="background-color:#bcacff;">2</td>
                         </tr> 
                     </tbody>
@@ -294,7 +299,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= mes_consulta.toUpperCase() %></td>
                             <td style="background-color:#bcacff;">3</td>
                         </tr> 
                     </tbody>
@@ -403,7 +408,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= mes_consulta.toUpperCase() %></td>
                             <td style="background-color:#bcacff;">4</td>
                         </tr> 
                     </tbody>
@@ -511,7 +516,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding-left: 20px;">⠀⠀⠀⠀</td>
+                            <td style="padding-left: 20px;"><%= mes_consulta.toUpperCase() %></td>
                         </tr> 
                     </tbody>
                 </table>   
@@ -647,7 +652,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding-left:20px"><%= mes%></td>
+                            <td style="padding-left:20px"><%= mes.toUpperCase() %></td>
                         </tr> 
                     </tbody>
                 </table>  
