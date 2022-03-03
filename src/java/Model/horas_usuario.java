@@ -18,7 +18,7 @@ public class horas_usuario {
     static Conexion ocon;
     public int id_horas_usuario;
     public int id_usuario;
-    public Date fecha;
+    public String fecha;
     public float HorasTrabajadas;
     public float salario_hora;
     
@@ -30,7 +30,7 @@ public class horas_usuario {
             horas_usuario item = new horas_usuario();
             item.id_usuario=rs.getInt("id_usuario");
             item.id_horas_usuario=rs.getInt("id_horas_usuario");
-            item.fecha=rs.getDate("fecha");
+            item.fecha=rs.getString("fecha");
             item.HorasTrabajadas=rs.getFloat("horas_trabajadas");
             item.salario_hora=rs.getFloat("salario_hora");
             horas.add(item);

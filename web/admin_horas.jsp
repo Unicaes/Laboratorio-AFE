@@ -1,4 +1,13 @@
+<%@page import="Model.horas_usuario"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    Usuario usuario = new Usuario();
+    horas_usuario horasusuario = new horas_usuario();
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -623,6 +632,10 @@
                 </div>                    
             </form>
 
+            <%   String mes = "";
+                if (request.getParameter("btn_editar_planilla") != null) {
+                    mes = request.getParameter("select_mes_editar").toLowerCase();}
+            %>
             <div style="padding: 20px">  
 
                 <table class="table table-bordered" 
@@ -634,7 +647,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding-left:20px">⠀⠀⠀⠀</td>
+                            <td style="padding-left:20px"><%= mes%></td>
                         </tr> 
                     </tbody>
                 </table>  
@@ -657,147 +670,74 @@
                     <tbody>
                         <!-- INICIO - Iterar Aquí -->
                         
+                        <%  if (!(mes.equals(""))) {
+                                 
+                            // Iterar por 4 semanas
+                            for (int s = 1; s <= 4; s++) {
+                                  
+                            ArrayList<Usuario> lUsuarios = usuario.GetAll();
+                               
+                            for (int i = 0; i < lUsuarios.size(); i++) {  
+                            ArrayList<horas_usuario> lHoras = horasusuario.GetHorasByUsuario(lUsuarios.get(i).id_usuario);
+                            float h_lun=0, h_mar=0, h_mie=0, h_jue=0, h_vie=0, h_sab=0;
+                            
+                            for (int j = 0; j < lHoras.size(); j++) {  
+                                if (lHoras.get(j).fecha.equals("s"+s+"-lun-" + mes)) {
+                                   h_lun = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-mar-" + mes)) {
+                                   h_mar = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-mie-" + mes)) {
+                                   h_mie = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-jue-" + mes)) {
+                                   h_jue = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-vie-" + mes)) {
+                                   h_vie = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-sab-" + mes)) {
+                                   h_sab = lHoras.get(j).HorasTrabajadas;
+                                }
+                            }                        
+                        %>  
                         <tr>
-                            <td><b>1</b></td>
-                            <td> </td>
+                            <td><b><%= s%></b></td>
+                            <td><%= lUsuarios.get(i).nombre + " " +  lUsuarios.get(i).apellido %></td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_lun"> hrs
+                                style="width: 35px;" value="<%= h_lun %>"
+                                name="<%= "hrs_s"+s+"_lun" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_mar"> hrs
+                                style="width: 35px;" value="<%= h_mar %>"
+                                name="<%= "hrs_s"+s+"_mar" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_mie"> hrs
+                                style="width: 35px;" value="<%= h_mie %>"
+                                name="<%= "hrs_s"+s+"_mie" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_jue"> hrs
+                                style="width: 35px;" value="<%= h_jue %>"
+                                name="<%= "hrs_s"+s+"_jue" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_vie"> hrs
+                                style="width: 35px;" value="<%= h_vie %>"
+                                name="<%= "hrs_s"+s+"_vie" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                             <td>
                                 <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s1_sab"> hrs
+                                style="width: 35px;" value="<%= h_sab %>"
+                                name="<%= "hrs_s"+s+"_sab" + lUsuarios.get(i).id_usuario %>"> hrs
                             </td>
                         </tr>
-                         
+                        <% }}}%> 
                         
-                        <tr>
-                            <td><b>2</b></td>
-                            <td> </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_lun"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_mar"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_mie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_jue"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_vie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s2_sab"> hrs
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>3</b></td>
-                            <td> </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_lun"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_mar"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_mie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_jue"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_vie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s3_sab"> hrs
-                            </td>
-                        </tr>
-                         
-                        
-                        <tr>
-                            <td><b>4</b></td>
-                            <td> </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_lun"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_mar"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_mie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_jue"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_vie"> hrs
-                            </td>
-                            <td>
-                                <input class="text-center" type="text"
-                                style="width: 35px;"
-                                name="hrs_s4_sab"> hrs
-                            </td>
-                        </tr>
                         <!-- FIN - Iterar Aquí -->
 
                     </tbody>
@@ -809,6 +749,10 @@
                         Guardar cambios
                     </button>                         
                 </form>
+                        
+                <% if (request.getParameter("btn_guardar_cambios") != null) {
+                   
+                }%>
             </div> 
             
         </div><br><br>
