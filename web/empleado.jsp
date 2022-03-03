@@ -1,4 +1,15 @@
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.horas_usuario"%>
+<%@page import="Model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    Usuario usuario = new Usuario();
+    horas_usuario horasusuario = new horas_usuario();
+    int id_usuario = 6;
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,6 +66,12 @@
                 </div>                    
             </form>
 
+            <% 
+                String mes = "";
+                if (request.getParameter("btn_consultar_planilla") != null) {
+                    mes = request.getParameter("select_mes").toLowerCase();}
+            %>
+            
             <!-- 1.2 Tabla - Planilla de horas/pagos mensual/semanal -->
             <div style="padding: 20px">  
                 
@@ -69,8 +86,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>⠀⠀⠀⠀</td>
-                            <td>⠀⠀⠀⠀</td>
+                            <td><%= mes %></td>
+                            <td>      </td>
                         </tr> 
                     </tbody>
                 </table>   
@@ -92,55 +109,70 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <%  
+                            double total_horas_semanal = 0;
+                            double total_salario_semanal = 0;
+                            double total_horas_mes = 0;
+                            double total_salario_mes = 0;
+                            double th_lun=0, th_mar=0, th_mie=0, th_jue=0, th_vie=0, th_sab=0;
+                            
+                            if (!(mes.equals(""))) {
+                            
+                            // Iterar por 4 semanas
+                            for (int s = 1; s <= 4; s++) {
+                                     
+                            ArrayList<horas_usuario> lHoras = horasusuario.GetHorasByUsuario(id_usuario);
+                            float h_lun=0, h_mar=0, h_mie=0, h_jue=0, h_vie=0, h_sab=0;
+                            
+                            for (int j = 0; j < lHoras.size(); j++) {  
+                                if (lHoras.get(j).fecha.equals("s"+s+"-lun-" + mes)) {
+                                   h_lun = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-mar-" + mes)) {
+                                   h_mar = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-mie-" + mes)) {
+                                   h_mie = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-jue-" + mes)) {
+                                   h_jue = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-vie-" + mes)) {
+                                   h_vie = lHoras.get(j).HorasTrabajadas;
+                                }
+                                else if (lHoras.get(j).fecha.equals("s"+s+"-sab-" + mes)) {
+                                   h_sab = lHoras.get(j).HorasTrabajadas;
+                                }
+                            }
+                            
+                            // Totales semanales
+                            total_horas_semanal = h_lun+h_mar+h_mie+h_jue+h_vie+h_sab;
+                            total_salario_semanal = total_horas_semanal * 10;
+                            
+                            // Totales mensuales
+                            total_horas_mes += total_horas_semanal;
+                            total_salario_mes += total_salario_semanal;
+                            
+                            // Total de horas por día
+                            th_lun += h_lun; th_mar += h_mar;
+                            th_mie += h_mie; th_jue += h_jue;
+                            th_vie += h_vie; th_sab += h_sab;
+                            
+                        %>  
                         <!-- INICIO - Iterar Aquí -->
                         <tr>
-                            <td><b>1</b></td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
+                            <td><b><%= s%></b></td>
+                            <td><%= h_lun + " hrs" %></td>
+                            <td><%= h_mar + " hrs"%></td>
+                            <td><%= h_mie + " hrs"%></td>
+                            <td><%= h_jue + " hrs"%></td>
+                            <td><%= h_vie + " hrs"%></td>
+                            <td><%= h_sab + " hrs"%></td>
+                            <td><%= total_horas_semanal + " hrs" %> </td>
+                            <td><%= "$ " + total_salario_semanal%></td>
                         </tr>
-                        
-                        <tr>
-                            <td><b>2</b></td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>3</b></td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>4</b></td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
+                        <% }}%> 
+                      
                         <!-- FIN - Iterar Aquí -->
                         
                         <tr><td></td><td></td><td></td><td></td><td></td>
@@ -149,22 +181,22 @@
                         <tr>
                             <td><b>Total horas por día</b></td>
                             <td style="background-color:#7bd0aa;">
-                               
+                               <%= th_lun + " hrs" %>
                             </td>
                             <td style="background-color:#7bd0aa;">
-                                
+                                <%= th_mar + " hrs" %>
                             </td>
                             <td style="background-color:#7bd0aa;">
-                               
+                                <%= th_mie + " hrs" %>
                             </td>
                             <td style="background-color:#7bd0aa;">
-                               
+                                <%= th_jue + " hrs" %>
                             </td>
                             <td style="background-color:#7bd0aa;">
-                                
+                                <%= th_vie + " hrs" %>
                             </td>
                             <td style="background-color:#7bd0aa;">
-                              
+                               <%= th_sab + " hrs" %>
                             </td>
                             <td><b>TOTAL HORAS</b></td>
                             <td><b>TOTAL A PAGAR</b></td>
@@ -172,28 +204,28 @@
                         <tr>
                             <td><b>Total a pagar por día</b></td>
                             <td style="background-color:#7bb9d0;">
-                               
+                               <%= "$ " + th_lun * 10 %>
                             </td>
                             <td style="background-color:#7bb9d0;">
-                              
+                               <%= "$ " + th_mar * 10 %>
                             </td>
                             <td style="background-color:#7bb9d0;">
-                              
+                               <%= "$ " + th_mie * 10 %>
                             </td>
                             <td style="background-color:#7bb9d0;">
-                              
+                               <%= "$ " + th_jue * 10 %>
                             </td>
                             <td style="background-color:#7bb9d0;">
-                              
+                               <%= "$ " + th_vie * 10 %>
                             </td>
                             <td style="background-color:#7bb9d0;">
-                              
+                               <%= "$ " + th_sab * 10 %>
                             </td>
                             <td style="background-color:#bcacff;">
-                             
+                                <%= total_horas_mes + " hrs" %>
                             </td>
                             <td style="background-color:#bcacff;">
-                                
+                                <%= "$ " + total_salario_mes%>
                             </td>
                         </tr>
                     </tbody>
@@ -243,77 +275,38 @@
                     </thead>
                     <tbody>
                         <!-- INICIO - Iterar Aquí -->
-                        <tr>
-                            <td><b>Enero</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
+                        
+                        <%  
+                            ArrayList<String> lmeses = new ArrayList<>(
+                            Arrays.asList("Enero","Febrero","Marzo", "Abril", "Mayo", 
+                                    "Junio", "Julio", "Agosto", "Septiembre",
+                                    "Octubre", "Noviembre", "Diciembre"));
+                            
+
+                            ArrayList<horas_usuario> lHoras = horasusuario.GetHorasByUsuario(id_usuario);
+                            double horas_anual = 0;
+                            
+                            for (int i = 0; i < lmeses.size(); i++) {
+                                String mes_trabajado = lmeses.get(i).toLowerCase();
+                                double horas_mes = 0;
+                                         
+                                for (int j = 0; j < lHoras.size(); j++) {  
+                                    if (lHoras.get(j).fecha.substring(7).equals(mes_trabajado)) {
+                                        horas_mes += lHoras.get(j).HorasTrabajadas;
+                                    }
+                            }
+                            
+                            // Totales anuales
+                            horas_anual += horas_mes;
+                        %>  
                         
                         <tr>
-                            <td><b>Febrero</b></td>
-                            <td> </td>
-                            <td> </td>
+                            <td><b><%= lmeses.get(i) %></b></td>
+                            <td><%= horas_mes + " hrs" %></td>
+                            <td><%= "$ " + horas_mes * 10 %></td>
                         </tr>
                         
-                        <tr>
-                            <td><b>Marzo</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Abril</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Mayo</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Junio</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Julio</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Agosto</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Septiembre</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Octubre</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Noviembre</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Diciembre</b></td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
+                        <% }%> 
                         
                         <!-- FIN - Iterar Aquí -->
                         
@@ -327,10 +320,10 @@
                         <tr>
                             <td></td>
                             <td style="background-color:#bcacff;">
-                             ⠀⠀⠀
+                             ⠀⠀⠀<%= horas_anual + " hrs" %>
                             </td>
                             <td style="background-color:#bcacff;">
-                                ⠀⠀⠀
+                                ⠀⠀<%= "$ " + horas_anual * 10 %>⠀
                             </td>
                         </tr>
                     </tbody>
