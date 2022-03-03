@@ -52,13 +52,13 @@ public class Usuario {
 
     public static void update(Usuario item) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         ocon = new Conexion();
-        String query = "update usuario set nombre='" + item.nombre + "',apellido='" + item.apellido + "',username = '" + item.username + "',clave = '" + item.clave + "',salario=" + item.salario;
+        String query = "update usuario set nombre='" + item.nombre + "',apellido='" + item.apellido + "',username = '" + item.username + "',clave = '" + item.clave + "',salario=" + item.salario + " where id_usuario="+item.id_usuario;
         ocon.DoQuery2(query);
     }
 
-    public static Usuario GetById() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+    public static Usuario GetById(int id) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         ocon = new Conexion();
-        ResultSet rs = ocon.consultar("*", "usuario");
+        ResultSet rs = ocon.consultar("*", "usuario where id_usuario="+id);
         Usuario item = new Usuario();
         while (rs.next()) {
 

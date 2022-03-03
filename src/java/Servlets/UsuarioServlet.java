@@ -55,6 +55,18 @@ public class UsuarioServlet extends HttpServlet {
                 response.sendRedirect("admin_empleados.jsp");
                 break;
             case "Update":
+                Usuario item2 = new Usuario();
+                item2.nombre=request.getParameter("txt_nombre");
+                item2.apellido=request.getParameter("txt_apellido");
+                item2.username=request.getParameter("txt_email");
+                item2.clave=request.getParameter("txt_password");
+                item2.salario=Float.parseFloat(request.getParameter("txt_salario"));
+                item2.id_usuario=id;
+                Usuario.update(item2);
+                response.sendRedirect("admin_empleados.jsp");
+                break;
+            case "Edit":
+                response.sendRedirect("ModifyUser.jsp?Id="+id);
                 break;
         }
     }

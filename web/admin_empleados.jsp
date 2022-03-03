@@ -64,7 +64,7 @@
                     <div class="col-6" style="padding-top:20px;">   
                         <button type="submit" name="action" value="Register-0" 
                                 class="btn btn-dark btn-md btn-block">
-                            Registrar usuario | Guardar cambios
+                            Registrar usuario
                         </button>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                                 <td> <% out.println(usuarios.get(i).apellido); %> </td>
                                 <td> <% out.println(usuarios.get(i).username); %> </td>
                                 <td> 
-                                    <button type="submit" name="action" value="Update-<% out.print(usuarios.get(i).id_usuario); %>" class="btn btn-outline-dark btn-md btn-block">
+                                    <button type="submit" name="action" value="Edit-<% out.print(usuarios.get(i).id_usuario); %>" class="btn btn-outline-dark btn-md btn-block">
                                         Editar
                                     </button>
                                     <button type="submit" name="action" value="Remove-<% out.print(usuarios.get(i).id_usuario); %>"
