@@ -103,6 +103,7 @@ public class Usuario {
         ocon = new Conexion();
         String query = "select salario from usuario where id_usuario="+id+";";
         ResultSet rs = ocon.DoQuery(query);
+        rs.next();
         return rs.getInt("salario");
     }
 }
