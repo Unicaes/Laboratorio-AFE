@@ -37,23 +37,25 @@ public class HorasServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException,ClassNotFoundException, InstantiationException, 
+            throws ServletException, IOException, ClassNotFoundException, InstantiationException,
             IllegalAccessException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         ArrayList<Usuario> usuarios = Usuario.GetAll();
-        Float [][][] horas = new Float[usuarios.size()][4][6];
+        Float[][][] horas = new Float[usuarios.size()][4][6];
         String mes = request.getParameter("month");
         for (int x = 0; x < usuarios.size(); x++) {
             for (int i = 1; i < 5; i++) {
                 String identificador = "hrs_s" + i;
                 for (int j = 1; j < 7; j++) {
-                    String identificador2 =identificador+ "_" + j + "_"+usuarios.get(x).id_usuario;
-                    horas[x][i-1][j-1]=Float.parseFloat(request.getParameter(identificador2));
-                    horas_usuario item = new horas_usuario();
-                    item.HorasTrabajadas=horas[x][i-1][j-1];
-                    item.id_usuario=usuarios.get(x).id_usuario;
-                    item.fecha="s"+i+"-"+j+"-"+mes;
-                    horas_usuario.Add(item);
+                    String identificador2 = identificador + "_" + j + "_" + usuarios.get(x).id_usuario;
+                    horas[x][i - 1][j - 1] = Float.parseFloat(request.getParameter(identificador2));
+                    if (horas[x][i - 1][j - 1] != 0 && !horas_usuario.CheckRecord("s" + i + "-" + j + "-" + mes,usuarios.get(x).id_usuario)) {
+                        horas_usuario item = new horas_usuario();
+                        item.HorasTrabajadas = horas[x][i - 1][j - 1];
+                        item.id_usuario = usuarios.get(x).id_usuario;
+                        item.fecha = "s" + i + "-" + j + "-" + mes;
+                        horas_usuario.Add(item);
+                    }
                 }
             }
         }

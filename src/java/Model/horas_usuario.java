@@ -38,7 +38,7 @@ public class horas_usuario {
     }
     public static int Add(horas_usuario item)throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
         ocon = new Conexion();
-        String query = "insert into horas_usuario(id_usuario,fecha,horas_trabajadas,salario_hora) values("+item.id_usuario+",'"+item.fecha+"',"+item.HorasTrabajadas+","+Usuario.GetSalario(item.id_usuario)+");";
+        String query = "insert into horas_usuario(id_usuario,fecha,horas_trabajadas) values("+item.id_usuario+",'"+item.fecha+"',"+item.HorasTrabajadas+");";
         int resp = ocon.agregar(query);
         return resp;
     }
@@ -51,5 +51,12 @@ public class horas_usuario {
         ocon = new Conexion();
         return ocon.eliminar("horas_usuario", "id_horas_usuario="+id);
     }
-    
+    public static boolean CheckRecord(String id,int idU)throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException{
+        String query = "select exists (select 1 from horas_usuario hu where hu.fecha='"+id+"' and id_usuario="+idU+" limit 1);";
+        ocon = new Conexion();
+        ResultSet rs = ocon.DoQuery(query);
+        rs.next();
+        boolean valor= rs.getBoolean(1);
+        return valor;
+    }
 }

@@ -32,42 +32,36 @@
                 <form class="border" method="POST" action="${pageContext.request.contextPath}/UsuarioServlet" style="padding: 20px;">
                 <div class="row">
 
-                    <div class="col-4">                    
+                    <div class="col-3">                    
                         <label class="mb-2">Nombre:</label>
                         <input type="text" name="txt_nombre" class="form-control"
                                placeholder="Ingreso de nombre...">
                     </div>  
 
-                    <div class="col-4">                    
+                    <div class="col-3">                    
                         <label class="mb-2">Apellido:</label>
                         <input type="text" name="txt_apellido" class="form-control"
                                placeholder="Ingreso de apellido...">
                     </div>  
 
-                    <div class="col-4">                    
+                    <div class="col-3">                    
                         <label class="mb-2">Correo electrónico:</label>
                         <input type="text" name="txt_email" class="form-control"
                                placeholder="Ingreso de e-mail...">
                     </div> 
-                </div>               
-                <div class="row">
-                    <div class="col-4">                    
+                    <div class="col-3">                    
                         <label class="mb-2">Password:</label>
                         <input type="password" name="txt_password" class="form-control"
                                placeholder="Ingreso de contraseña...">
                     </div> 
-                    <div class="col-4">                    
-                        <label class="mb-2">Salario:</label>
-                        <input type="number" name="txt_salario" class="form-control"
-                               placeholder="Ingrese el salario">
-                    </div> 
+
                     <div class="col-6" style="padding-top:20px;">   
                         <button type="submit" name="action" value="Register-0" 
                                 class="btn btn-dark btn-md btn-block">
                             Registrar usuario
                         </button>
                     </div>
-                </div>
+                </div>               
 
 
             </form><br>             
